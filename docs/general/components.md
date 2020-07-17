@@ -52,7 +52,7 @@ to watch out for when building and publishing your new package or project.
 ### Publishing to npm registry
 
 In your new package, you will most likely have a build task to transpile from
-ES6 into ES5. You probably keep your ES6 code in a `src/` directory and your
+ES6 into ES5. You probably keep your ES6 code in a `` directory and your
 transpiled code in a `lib/` directory.
 
 In your `package.json`, you probably have something like this:
@@ -65,7 +65,7 @@ This is what you want when you publish to the registry, but during development
 you probably want to change this to
 
 ```json
-  "main": "src/index.js"
+  "main": "index.js"
 ```
 
 This will make sure that your main project always includes your most recent

@@ -5,6 +5,18 @@
 const path = require('path');
 const webpack = require('webpack');
 
+// IMPORTANT -  only use to load & override style of [antd]
+const lessLoaders = [
+  'style-loader',
+  {
+    loader: 'css-loader',
+  },
+  {
+    loader: 'less-loader',
+    options: { lessOptions: { javascriptEnabled: true } },
+  },
+];
+
 module.exports = options => ({
   mode: options.mode,
   entry: options.entry,
@@ -57,6 +69,10 @@ module.exports = options => ({
             },
           },
         ],
+      },
+      {
+        test: /\.less$/,
+        use: lessLoaders,
       },
       {
         test: /\.(jpg|png|gif)$/,
@@ -116,7 +132,7 @@ module.exports = options => ({
     }),
   ]),
   resolve: {
-    modules: ['node_modules', 'app'],
+    modules: ['node_modules', 'src'],
     extensions: ['.js', '.jsx', '.react.js'],
     mainFields: ['browser', 'jsnext:main', 'main'],
   },
