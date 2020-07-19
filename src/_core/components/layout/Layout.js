@@ -1,20 +1,16 @@
 import React, { useState } from 'react';
 import { Avatar } from 'antd';
+import { push } from 'connected-react-router';
 import { UserOutlined } from '@ant-design/icons';
-import ProLayout, {
-  PageContainer,
-  SettingDrawer,
-} from '@ant-design/pro-layout';
-import defaultSettings from '@ant-design/pro-layout/es/defaultSettings';
+import { useDispatch } from 'react-redux';
+
+import ProLayout, { PageContainer } from '@ant-design/pro-layout';
 import defaultProps from './defaultProps';
 
 // eslint-disable-next-line react/prop-types
 const Layout = ({ children }) => {
-  const [settings, setSetting] = useState({
-    ...defaultSettings,
-    title: 'Yocto ERP',
-  });
-  const [pathname, setPathname] = useState('/dashboard');
+  const [pathname, setPathname] = useState(window.location.pathname);
+  const dispatch = useDispatch();
   return (
     <div
       id="test-pro-layout"
@@ -25,6 +21,7 @@ const Layout = ({ children }) => {
     >
       <ProLayout
         {...defaultProps}
+        title="Yocto ERP"
         style={{
           maxHeight: '100vh',
         }}
@@ -36,6 +33,7 @@ const Layout = ({ children }) => {
           <a
             onClick={() => {
               setPathname(item.path || '/dashboard');
+              dispatch(push(item.path));
             }}
           >
             {dom}
@@ -46,15 +44,9 @@ const Layout = ({ children }) => {
             <Avatar shape="square" size="small" icon={<UserOutlined />} />
           </div>
         )}
-        {...settings}
       >
         <PageContainer footer="Yocto ERP 2020">{children}</PageContainer>
       </ProLayout>
-      <SettingDrawer
-        getContainer={() => document.getElementById('test-pro-layout')}
-        settings={settings}
-        onSettingChange={changeSetting => setSetting(changeSetting)}
-      />
     </div>
   );
 };

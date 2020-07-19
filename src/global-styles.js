@@ -26,6 +26,13 @@ const GlobalStyle = createGlobalStyle`
   #test-pro-layout {
     height: 100%;
   }
+  .ant-spin-container {
+    height: 100%;
+  }
+
+  .ant-spin-nested-loading {
+    height: 100%;
+  }
   //
   //p,
   //label {

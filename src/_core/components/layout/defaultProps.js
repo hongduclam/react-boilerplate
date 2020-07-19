@@ -9,26 +9,21 @@ const defaultProps = {
         path: '/dashboard',
         name: 'Dashboard',
         icon: <SmileOutlined />,
-        component: 'app/pages/dashboard',
       },
       {
         path: '/inventory',
-        name: 'Inventory Managements',
+        name: 'Inventory',
         icon: <CrownOutlined />,
-        access: 'canAdmin',
-        component: './inventory',
         routes: [
           {
-            path: '/inventory/sub-page',
-            name: 'Sub 1',
+            path: '/inventory/summary',
+            name: 'Summary',
             icon: <CrownOutlined />,
-            component: './Welcome',
           },
           {
-            path: '/inventory/sub-page1',
-            name: 'Sub 2',
+            path: '/inventory/warehouses/list',
+            name: 'Warehouse',
             icon: <CrownOutlined />,
-            component: './Welcome',
           },
           {
             path: '/inventory/sub-page2',

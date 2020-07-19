@@ -12,6 +12,8 @@ import '@babel/polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import axios from 'axios';
+
 import { ConnectedRouter } from 'connected-react-router';
 import FontFaceObserver from 'fontfaceobserver';
 import history from '_core/utils/history';
@@ -31,6 +33,8 @@ import 'file-loader?name=.htaccess!./.htaccess'; // eslint-disable-line import/e
 import configureStore from 'redux/configureStore';
 
 // Import i18n messages
+import setupAxios from 'redux/setupAxios';
+import SpinLoadingProvider from 'app/containers/Loading/SpinLoadingProvider';
 import { translationMessages } from './i18n';
 
 // Observe loading of Open Sans (to remove open sans, remove the <link> tag in
@@ -45,6 +49,8 @@ openSansObserver.load().then(() => {
 // Create redux store with history
 const initialState = {};
 const store = configureStore(initialState, history);
+setupAxios(axios, store);
+
 const MOUNT_NODE = document.getElementById('app');
 
 const render = messages => {
@@ -52,7 +58,9 @@ const render = messages => {
     <Provider store={store}>
       <LanguageProvider messages={messages}>
         <ConnectedRouter history={history}>
-          <App />
+          <SpinLoadingProvider>
+            <App />
+          </SpinLoadingProvider>
         </ConnectedRouter>
       </LanguageProvider>
     </Provider>,
