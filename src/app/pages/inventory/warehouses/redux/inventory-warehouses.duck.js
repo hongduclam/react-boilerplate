@@ -11,6 +11,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { createSelector } from 'reselect';
 import produce from 'immer';
 import * as crud from 'app/pages/inventory/warehouses/redux/inventory-warehouses.crud';
+import { showNotification } from 'app/containers/Notification/notification.duck';
 import { MODULE_STATE_NAME } from '../constants';
 
 const buildAsyncActionTypes = actionName => ({
@@ -59,6 +60,7 @@ export const reducer = (state = initialState, action) =>
       case actionTypes.create.success:
       case actionTypes.remove.success:
         draft.inventoryWarehouseDetail = initialState.inventoryWarehouseDetail;
+        draft.inventoryWarehouseList = initialState.inventoryWarehouseList;
         break;
       case actionTypes.create.error:
       case actionTypes.remove.error:
@@ -80,6 +82,15 @@ export const actions = {
     }),
     success: payload => ({ type: actionTypes.create.success, payload }),
     error: error => ({ type: actionTypes.create.error, error }),
+  },
+  update: {
+    start: (payload, callback) => ({
+      type: actionTypes.update.start,
+      payload,
+      callback,
+    }),
+    success: payload => ({ type: actionTypes.update.success, payload }),
+    error: error => ({ type: actionTypes.update.error, error }),
   },
   remove: {
     start: (payload, callback) => ({
@@ -114,6 +125,11 @@ export function* saga() {
       const data = yield call(crud.get, action.payload);
       yield put(actions.getById.success(data));
     } catch (e) {
+      yield put(
+        showNotification('error', {
+          message: 'Get Warehouse Error',
+        }),
+      );
       yield put(actions.getById.error(e));
     }
   });
@@ -125,8 +141,47 @@ export function* saga() {
         const data = yield call(crud.create, toModel(action.payload));
         yield put(actions.create.success(data));
         action.callback && action.callback();
+        yield put(
+          showNotification('success', {
+            message: 'Create Warehouse Success',
+          }),
+        );
       } catch (e) {
+        yield put(
+          showNotification('error', {
+            message: 'Create Warehouse Error',
+          }),
+        );
         yield put(actions.create.error(e));
+      }
+    },
+  );
+
+  yield takeLatest(
+    actionTypes.update.start,
+    function* updateInventoryWarehouseSaga(action) {
+      try {
+        const data = yield call(
+          crud.update,
+          action.payload.id,
+          toModel(action.payload),
+        );
+        yield put(actions.update.success(data));
+        yield put(
+          showNotification('success', {
+            message: 'Update Warehouse Success',
+          }),
+        );
+
+        action.callback && action.callback();
+      } catch (e) {
+        console.error(e);
+        yield put(
+          showNotification('error', {
+            message: 'Update Warehouse Error',
+          }),
+        );
+        yield put(actions.update.error(e));
       }
     },
   );
@@ -138,7 +193,18 @@ export function* saga() {
         yield call(crud.remove, action.payload.id);
         yield put(actions.remove.success(action.payload));
         action.callback && action.callback();
+        yield put(
+          showNotification('success', {
+            message: 'Delete Warehouse Success',
+          }),
+        );
       } catch (e) {
+        console.error(e);
+        yield put(
+          showNotification('error', {
+            message: 'Delete Warehouse Error',
+          }),
+        );
         yield put(actions.remove.error(e));
       }
     },
@@ -151,6 +217,11 @@ export function* saga() {
         const data = yield call(crud.filter, action.payload);
         yield put(actions.filter.success(data));
       } catch (e) {
+        yield put(
+          showNotification('error', {
+            message: 'Filter Warehouse Error',
+          }),
+        );
         yield put(actions.filter.error(e));
       }
     },

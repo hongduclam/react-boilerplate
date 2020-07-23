@@ -22,7 +22,7 @@ const mock = new MockAdapter(axios);
 
 // Mock any GET request to /users
 // arguments for reply are (status, data, headers)
-mock.onGet('/api/inventory/warehouse').reply(200, {
+mock.onGet('/api/inventory/warehouses').reply(200, {
   results: [
     {
       id: 1,
@@ -33,4 +33,36 @@ mock.onGet('/api/inventory/warehouse').reply(200, {
     },
   ],
   quantity: 1,
+});
+
+mock.onGet('/api/inventory/warehouses/1').reply(200, {
+  id: 1,
+  name: 'John Smith',
+  product: 'product',
+  unitName: 'unitName',
+  lastUpdatedDate: '2020-12-09',
+});
+
+mock.onPost('/api/inventory/warehouses').reply(200, {
+  id: 1,
+  name: 'John Smith',
+  product: 'product',
+  unitName: 'unitName',
+  lastUpdatedDate: '2020-12-09',
+});
+
+mock.onPut('/api/inventory/warehouses/1').reply(200, {
+  id: 1,
+  name: 'John Smith',
+  product: 'product',
+  unitName: 'unitName',
+  lastUpdatedDate: '2020-12-09',
+});
+
+mock.onDelete('/api/inventory/warehouses/1').reply(200, {
+  id: 1,
+  name: 'John Smith',
+  product: 'product',
+  unitName: 'unitName',
+  lastUpdatedDate: '2020-12-09',
 });

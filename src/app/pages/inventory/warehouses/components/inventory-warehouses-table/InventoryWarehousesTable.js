@@ -86,7 +86,7 @@ function InventoryWarehousesTable({ hideActionCol }) {
     },
     {
       title: 'Unit',
-      width: '20%',
+      width: '10%',
       dataIndex: 'unitName',
       sorter: true,
     },
@@ -135,6 +135,7 @@ function InventoryWarehousesTable({ hideActionCol }) {
   } = inventoryWarehousesState;
 
   useEffect(() => {
+    console.log('dispach table');
     dispatch(actions.filter.start(inventoryWarehousesUIProps.queryParams));
     return () => dispatch(actions.resetState());
     // eslint-disable-next-line react-hooks/exhaustive-deps

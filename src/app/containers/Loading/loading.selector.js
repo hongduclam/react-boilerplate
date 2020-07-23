@@ -1,5 +1,4 @@
 export const makeLoadingSelector = state => {
-  console.log('state.loading', state.loading);
   if (!state.loading) {
     return false;
   }

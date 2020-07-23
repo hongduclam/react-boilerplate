@@ -29,18 +29,20 @@ export default function InventoryWarehousesEdit({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(actions.getById(id));
+    if (id) {
+      dispatch(actions.getById.start(id));
+    }
   }, [id, dispatch]);
 
   const handleCancel = () => {
-    inventoryWarehousesUIProps.onCancel;
+    inventoryWarehousesUIProps.onCancel();
   };
 
   const handleSave = values => {
     if (!id) {
-      dispatch(actions.create(values, handleCancel));
+      dispatch(actions.create.start(values, handleCancel));
     } else {
-      dispatch(actions.update(values, handleCancel));
+      dispatch(actions.update.start(values, handleCancel));
     }
   };
 

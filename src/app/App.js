@@ -5,7 +5,9 @@ import GlobalStyle from 'global-styles';
 function App() {
   return (
     <>
-      <Routes /> <GlobalStyle />
+      <Routes />
+
+      <GlobalStyle />
     </>
   );
 }

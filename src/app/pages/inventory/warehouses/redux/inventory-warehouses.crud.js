@@ -1,10 +1,10 @@
 import httpClient from 'axios';
 
-const API_ENDPOINT_URL = `api/inventory/warehouse`;
+const API_ENDPOINT_URL = `api/inventory/warehouses`;
 
 export function get(id) {
   if (!id) throw new Error('Missing Id');
-  return httpClient.get(`${API_ENDPOINT_URL}/${id}`);
+  return httpClient.get(`${API_ENDPOINT_URL}/${id}`).then(rs => rs.data);
 }
 
 export function filter(params) {
@@ -14,7 +14,7 @@ export function filter(params) {
 
 export function update(id, data) {
   if (!data) throw new Error('Missing Form data');
-  return httpClient.put(`${API_ENDPOINT_URL}/${id}`, data);
+  return httpClient.put(`${API_ENDPOINT_URL}/${id}`, data).then(rs => rs.data);
 }
 export function create(data) {
   if (!data) throw new Error('Missing Form data');

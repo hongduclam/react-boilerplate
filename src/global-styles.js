@@ -33,12 +33,6 @@ const GlobalStyle = createGlobalStyle`
   .ant-spin-nested-loading {
     height: 100%;
   }
-  //
-  //p,
-  //label {
-  //  font-family: Georgia, Times, 'Times New Roman', serif;
-  //  line-height: 1.5em;
-  //}
 `;
 
 export default GlobalStyle;

@@ -7,7 +7,7 @@ function SpinLoadingProvider({ children }) {
   // eslint-disable-next-line no-unused-vars
   const isLoading = useSelector(makeLoadingSelector);
   return (
-    <Spin tip="Loading..." spinning={false}>
+    <Spin tip="Loading..." spinning={isLoading}>
       {children}
     </Spin>
   );
